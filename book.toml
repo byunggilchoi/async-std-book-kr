@@ -1,0 +1,6 @@
+[book]
+authors = ["bg_choi"]
+language = "kr"
+multilingual = false
+src = "src"
+title = "Async programming in Rust with async-std - kr"
