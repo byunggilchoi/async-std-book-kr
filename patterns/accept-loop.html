@@ -1,0 +1,480 @@
+<!DOCTYPE HTML>
+<html lang="kr" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Production-Ready Accept Loop - Async programming in Rust with async-std - kr</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../overview/async-std.html"><strong aria-hidden="true">1.1.</strong> Welcome to async-std!</a></li><li class="chapter-item expanded "><a href="../overview/std-and-library-futures.html"><strong aria-hidden="true">1.2.</strong> std::future and futures-rs</a></li><li class="chapter-item expanded "><a href="../overview/stability-guarantees.html"><strong aria-hidden="true">1.3.</strong> Stability guarantees</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts.html"><strong aria-hidden="true">2.</strong> Async concepts using async-std</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/futures.html"><strong aria-hidden="true">2.1.</strong> Futures</a></li><li class="chapter-item expanded "><a href="../concepts/tasks.html"><strong aria-hidden="true">2.2.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="../concepts/async-read-write.html"><strong aria-hidden="true">2.3.</strong> Async read/write</a></li><li class="chapter-item expanded "><a href="../concepts/streams.html"><strong aria-hidden="true">2.4.</strong> Streams and Channels</a></li></ol></li><li class="chapter-item expanded "><a href="../tutorial/index.html"><strong aria-hidden="true">3.</strong> Tutorial: Implementing a chat</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tutorial/specification.html"><strong aria-hidden="true">3.1.</strong> Specification and Getting started</a></li><li class="chapter-item expanded "><a href="../tutorial/accept_loop.html"><strong aria-hidden="true">3.2.</strong> Writing an Accept Loop</a></li><li class="chapter-item expanded "><a href="../tutorial/receiving_messages.html"><strong aria-hidden="true">3.3.</strong> Receiving Messages</a></li><li class="chapter-item expanded "><a href="../tutorial/sending_messages.html"><strong aria-hidden="true">3.4.</strong> Sending Messages</a></li><li class="chapter-item expanded "><a href="../tutorial/connecting_readers_and_writers.html"><strong aria-hidden="true">3.5.</strong> Connecting Readers and Writers</a></li><li class="chapter-item expanded "><a href="../tutorial/all_together.html"><strong aria-hidden="true">3.6.</strong> All Together</a></li><li class="chapter-item expanded "><a href="../tutorial/clean_shutdown.html"><strong aria-hidden="true">3.7.</strong> Clean Shutdown</a></li><li class="chapter-item expanded "><a href="../tutorial/handling_disconnection.html"><strong aria-hidden="true">3.8.</strong> Handling Disconnection</a></li><li class="chapter-item expanded "><a href="../tutorial/implementing_a_client.html"><strong aria-hidden="true">3.9.</strong> Implementing a Client</a></li></ol></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">4.</strong> Async Patterns</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../patterns/small-patterns.html"><strong aria-hidden="true">4.1.</strong> TODO: Collected Small Patterns</a></li><li class="chapter-item expanded "><a href="../patterns/accept-loop.html" class="active"><strong aria-hidden="true">4.2.</strong> Production-Ready Accept Loop</a></li></ol></li><li class="chapter-item expanded "><a href="../security/index.html"><strong aria-hidden="true">5.</strong> Security practices</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../security/policy.html"><strong aria-hidden="true">5.1.</strong> Security Disclosures and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Async programming in Rust with async-std - kr</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#production-ready-accept-loop" id="production-ready-accept-loop">Production-Ready Accept Loop</a></h1>
+<p>A production-ready accept loop needs the following things:</p>
+<ol>
+<li>Handling errors</li>
+<li>Limiting the number of simultanteous connections to avoid deny-of-service
+(DoS) attacks</li>
+</ol>
+<h2><a class="header" href="#handling-errors" id="handling-errors">Handling errors</a></h2>
+<p>There are two kinds of errors in an accept loop:</p>
+<ol>
+<li>Per-connection errors. The system uses them to notify that there was a
+connection in the queue and it's dropped by the peer. Subsequent connections
+can be already queued so next connection must be accepted immediately.</li>
+<li>Resource shortages. When these are encountered it doesn't make sense to
+accept the next socket immediately. But the listener stays active, so you server
+should try to accept socket later.</li>
+</ol>
+<p>Here is the example of a per-connection error (printed in normal and debug mode):</p>
+<pre><code>Error: Connection reset by peer (os error 104)
+Error: Os { code: 104, kind: ConnectionReset, message: &quot;Connection reset by peer&quot; }
+</code></pre>
+<p>And the following is the most common example of a resource shortage error:</p>
+<pre><code>Error: Too many open files (os error 24)
+Error: Os { code: 24, kind: Other, message: &quot;Too many open files&quot; }
+</code></pre>
+<h3><a class="header" href="#testing-application" id="testing-application">Testing Application</a></h3>
+<p>To test your application for these errors try the following (this works
+on unixes only).</p>
+<p>Lower limits and start the application:</p>
+<pre><code>$ ulimit -n 100
+$ cargo run --example your_app
+   Compiling your_app v0.1.0 (/work)
+    Finished dev [unoptimized + debuginfo] target(s) in 5.47s
+     Running `target/debug/examples/your_app`
+Server is listening on: http://127.0.0.1:1234
+</code></pre>
+<p>Then in another console run the <a href="https://github.com/wg/wrk"><code>wrk</code></a> benchmark tool:</p>
+<pre><code>$ wrk -c 1000 http://127.0.0.1:1234
+Running 10s test @ http://localhost:8080/
+  2 threads and 1000 connections
+$ telnet localhost 1234
+Trying ::1...
+Connected to localhost.
+</code></pre>
+<p>Important is to check the following things:</p>
+<ol>
+<li>The application doesn't crash on error (but may log errors, see below)</li>
+<li>It's possible to connect to the application again once load is stopped
+(few seconds after <code>wrk</code>). This is what <code>telnet</code> does in example above,
+make sure it prints <code>Connected to &lt;hostname&gt;</code>.</li>
+<li>The <code>Too many open files</code> error is logged in the appropriate log. This
+requires to set &quot;maximum number of simultaneous connections&quot; parameter (see
+below) of your application to a value greater then <code>100</code> for this example.</li>
+<li>Check CPU usage of the app while doing a test. It should not occupy 100%
+of a single CPU core (it's unlikely that you can exhaust CPU by 1000
+connections in Rust, so this means error handling is not right).</li>
+</ol>
+<h4><a class="header" href="#testing-non-http-applications" id="testing-non-http-applications">Testing non-HTTP applications</a></h4>
+<p>If it's possible, use the appropriate benchmark tool and set the appropriate
+number of connections. For example <code>redis-benchmark</code> has a <code>-c</code> parameter for
+that, if you implement redis protocol.</p>
+<p>Alternatively, can still use <code>wrk</code>, just make sure that connection is not
+immediately closed. If it is, put a temporary timeout before handing
+the connection to the protocol handler, like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    net::{TcpListener, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">
+</span><span class="boring">async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; {
+</span><span class="boring">   let listener = TcpListener::bind(addr).await?;
+</span><span class="boring">   let mut incoming = listener.incoming();
+</span>while let Some(stream) = incoming.next().await {
+    task::spawn(async {
+        task::sleep(Duration::from_secs(10)).await; // 1
+        connection_loop(stream).await;
+    });
+}
+<span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">}
+</span></code></pre></pre>
+<ol>
+<li>Make sure the sleep coroutine is inside the spawned task, not in the loop.</li>
+</ol>
+<h3><a class="header" href="#handling-errors-manually" id="handling-errors-manually">Handling Errors Manually</a></h3>
+<p>Here is how basic accept loop could look like:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    net::{TcpListener, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">
+</span>async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; {
+    let listener = TcpListener::bind(addr).await?;
+    let mut incoming = listener.incoming();
+    while let Some(result) = incoming.next().await {
+        let stream = match result {
+            Err(ref e) if is_connection_error(e) =&gt; continue, // 1
+            Err(e) =&gt; {
+                eprintln!(&quot;Error: {}. Pausing for 500ms.&quot;, e); // 3
+                task::sleep(Duration::from_millis(500)).await; // 2
+                continue;
+            }
+            Ok(s) =&gt; s,
+        };
+        // body
+    }
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<ol>
+<li>Ignore per-connection errors.</li>
+<li>Sleep and continue on resource shortage.</li>
+<li>It's important to log the message, because these errors commonly mean the
+misconfiguration of the system and are helpful for operations people running
+the application.</li>
+</ol>
+<p>Be sure to <a href="#testing-application">test your application</a>.</p>
+<h3><a class="header" href="#external-crates" id="external-crates">External Crates</a></h3>
+<p>The crate <a href="https://crates.io/crates/async-listen/"><code>async-listen</code></a> has a helper to achieve this task:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">extern crate async_listen;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    net::{TcpListener, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">
+</span>use async_listen::{ListenExt, error_hint};
+
+async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; {
+
+    let listener = TcpListener::bind(addr).await?;
+    let mut incoming = listener
+        .incoming()
+        .log_warnings(log_accept_error) // 1
+        .handle_errors(Duration::from_millis(500));
+    while let Some(socket) = incoming.next().await { // 2
+        // body
+    }
+    Ok(())
+}
+
+fn log_accept_error(e: &amp;io::Error) {
+    eprintln!(&quot;Error: {}. Listener paused for 0.5s. {}&quot;, e, error_hint(e)) // 3
+}
+<span class="boring">}
+</span></code></pre></pre>
+<ol>
+<li>Logs resource shortages (<code>async-listen</code> calls them warnings). If you use
+<code>log</code> crate or any other in your app this should go to the log.</li>
+<li>Stream yields sockets without <code>Result</code> wrapper after <code>handle_errors</code> because
+all errors are already handled.</li>
+<li>Together with the error we print a hint, which explains some errors for end
+users. For example, it recommends increasing open file limit and gives
+a link.</li>
+</ol>
+<p>Be sure to <a href="#testing-application">test your application</a>.</p>
+<h2><a class="header" href="#connections-limit" id="connections-limit">Connections Limit</a></h2>
+<p>Even if you've applied everything described in
+<a href="#handling-errors">Handling Errors</a> section, there is still a problem.</p>
+<p>Let's imagine you have a server that needs to open a file to process
+client request. At some point, you might encounter the following situation:</p>
+<ol>
+<li>There are as many client connection as max file descriptors allowed for
+the application.</li>
+<li>Listener gets <code>Too many open files</code> error so it sleeps.</li>
+<li>Some client sends a request via the previously open connection.</li>
+<li>Opening a file to serve request fails, because of the same
+<code>Too many open files</code> error, until some other client drops a connection.</li>
+</ol>
+<p>There are many more possible situations, this is just a small illustation that
+limiting number of connections is very useful. Generally, it's one of the ways
+to control resources used by a server and avoiding some kinds of deny of
+service (DoS) attacks.</p>
+<h3><a class="header" href="#async-listen-crate" id="async-listen-crate"><code>async-listen</code> crate</a></h3>
+<p>Limiting maximum number of simultaneous connections with <a href="https://crates.io/crates/async-listen/"><code>async-listen</code></a>
+looks like the following:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">extern crate async_listen;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    net::{TcpListener, TcpStream, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">
+</span>use async_listen::{ListenExt, Token, error_hint};
+
+async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; {
+
+    let listener = TcpListener::bind(addr).await?;
+    let mut incoming = listener
+        .incoming()
+        .log_warnings(log_accept_error)
+        .handle_errors(Duration::from_millis(500)) // 1
+        .backpressure(100);
+    while let Some((token, socket)) = incoming.next().await { // 2
+         task::spawn(async move {
+             connection_loop(&amp;token, stream).await; // 3
+         });
+    }
+    Ok(())
+}
+async fn connection_loop(_token: &amp;Token, stream: TcpStream) { // 4
+    // ...
+}
+<span class="boring">fn log_accept_error(e: &amp;io::Error) {
+</span><span class="boring">    eprintln!(&quot;Error: {}. Listener paused for 0.5s. {}&quot;, e, error_hint(e));
+</span><span class="boring">}
+</span><span class="boring">}
+</span></code></pre></pre>
+<ol>
+<li>We need to handle errors first, because <a href="https://docs.rs/async-listen/0.1.2/async_listen/trait.ListenExt.html#method.backpressure"><code>backpressure</code></a> helper expects
+stream of <code>TcpStream</code> rather than <code>Result</code>.</li>
+<li>The token yielded by a new stream is what is counted by backpressure helper.
+I.e. if you drop a token, new connection can be established.</li>
+<li>We give the connection loop a reference to token to bind token's lifetime to
+the lifetime of the connection.</li>
+<li>The token itsellf in the function can be ignored, hence <code>_token</code></li>
+</ol>
+<p>Be sure to <a href="#testing-application">test this behavior</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../patterns/small-patterns.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../security/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../patterns/small-patterns.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../security/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

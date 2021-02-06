@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html lang="kr" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Writing an Accept Loop - Async programming in Rust with async-std - kr</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../overview/async-std.html"><strong aria-hidden="true">1.1.</strong> Welcome to async-std!</a></li><li class="chapter-item expanded "><a href="../overview/std-and-library-futures.html"><strong aria-hidden="true">1.2.</strong> std::future and futures-rs</a></li><li class="chapter-item expanded "><a href="../overview/stability-guarantees.html"><strong aria-hidden="true">1.3.</strong> Stability guarantees</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts.html"><strong aria-hidden="true">2.</strong> Async concepts using async-std</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/futures.html"><strong aria-hidden="true">2.1.</strong> Futures</a></li><li class="chapter-item expanded "><a href="../concepts/tasks.html"><strong aria-hidden="true">2.2.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="../concepts/async-read-write.html"><strong aria-hidden="true">2.3.</strong> Async read/write</a></li><li class="chapter-item expanded "><a href="../concepts/streams.html"><strong aria-hidden="true">2.4.</strong> Streams and Channels</a></li></ol></li><li class="chapter-item expanded "><a href="../tutorial/index.html"><strong aria-hidden="true">3.</strong> Tutorial: Implementing a chat</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tutorial/specification.html"><strong aria-hidden="true">3.1.</strong> Specification and Getting started</a></li><li class="chapter-item expanded "><a href="../tutorial/accept_loop.html" class="active"><strong aria-hidden="true">3.2.</strong> Writing an Accept Loop</a></li><li class="chapter-item expanded "><a href="../tutorial/receiving_messages.html"><strong aria-hidden="true">3.3.</strong> Receiving Messages</a></li><li class="chapter-item expanded "><a href="../tutorial/sending_messages.html"><strong aria-hidden="true">3.4.</strong> Sending Messages</a></li><li class="chapter-item expanded "><a href="../tutorial/connecting_readers_and_writers.html"><strong aria-hidden="true">3.5.</strong> Connecting Readers and Writers</a></li><li class="chapter-item expanded "><a href="../tutorial/all_together.html"><strong aria-hidden="true">3.6.</strong> All Together</a></li><li class="chapter-item expanded "><a href="../tutorial/clean_shutdown.html"><strong aria-hidden="true">3.7.</strong> Clean Shutdown</a></li><li class="chapter-item expanded "><a href="../tutorial/handling_disconnection.html"><strong aria-hidden="true">3.8.</strong> Handling Disconnection</a></li><li class="chapter-item expanded "><a href="../tutorial/implementing_a_client.html"><strong aria-hidden="true">3.9.</strong> Implementing a Client</a></li></ol></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">4.</strong> Async Patterns</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../patterns/small-patterns.html"><strong aria-hidden="true">4.1.</strong> TODO: Collected Small Patterns</a></li><li class="chapter-item expanded "><a href="../patterns/accept-loop.html"><strong aria-hidden="true">4.2.</strong> Production-Ready Accept Loop</a></li></ol></li><li class="chapter-item expanded "><a href="../security/index.html"><strong aria-hidden="true">5.</strong> Security practices</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../security/policy.html"><strong aria-hidden="true">5.1.</strong> Security Disclosures and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Async programming in Rust with async-std - kr</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#수락-루프-작성" id="수락-루프-작성">수락 루프 작성</a></h2>
+<p>서버의 얼개부터 구현해보겠습니다. TCP 소켓을 주소에 바인딩하고 연결 수락을 시작하는 루프죠.</p>
+<p>먼저 사용할 라이브러리 요소들부터 추가해봅시다.</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span>use async_std::{
+    prelude::*, // 1
+    task, // 2
+    net::{TcpListener, ToSocketAddrs}, // 3
+};
+
+type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;; // 4
+<span class="boring">}
+</span></code></pre></pre>
+<ol>
+<li><code>prelude</code>는 future와 stream으로 작업하기 위해 필요한 트레잇들을 담고 있습니다.</li>
+<li><code>task</code> 모듈은 대략 <code>std::thread</code> 모듈과 비슷하지만 task 모듈이 훨씬 더 가볍습니다.
+단일 쓰레드는 여러 개의 task를 처리할 수 있습니다.</li>
+<li>소켓 타입에서는 <code>async_std</code>의 <code>TcpListener</code>를 사용할 것입니다. 이는 <code>std::net::TcpListener</code>와 비슷하지만 논블로킹이고 <code>async</code> API를 사용합니다.</li>
+<li>이번 예제에서는 포괄적인 에러 처리는 구현하지 않을 것입니다.
+에러를 전파하기 위해서 boxed 에러 트레잇 객체를 사용합니다.
+std 라이브러리에 <code>From&lt;&amp;'_ str&gt; for Box&lt;dyn Error&gt;</code> 구현이 있다는 것을 알고 있었나요? <code>?</code> 연산자를 문자열과 함께 사용할 수 있습니다.</li>
+</ol>
+<p>이제 서버의 수락 루프를 작성할 수 있게 되었습니다.</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    net::{TcpListener, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">
+</span>async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; { // 1
+
+    let listener = TcpListener::bind(addr).await?; // 2
+    let mut incoming = listener.incoming();
+    while let Some(stream) = incoming.next().await { // 3
+        // TODO
+    }
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<ol>
+<li><code>accept_loop</code> 함수에 <code>async</code>를 표시하면 함수 안에서 <code>.await</code> 문법을 쓸 수 있습니다.</li>
+<li><code>TcpListener::bind</code> 호출은 Future를 반환합니다. 여기에 <code>.await</code>를 사용해서 <code>Result</code>를 받을 수 있고 <code>?</code> 연산자를 적용하면 <code>TcpListener</code>가 나옵니다.
+어떻게 <code>.await</code>와 <code>?</code> 연산자가 어떻게 함께 잘 작동하는지 꼭 확인합시다.
+정확하게 <code>std::net::TcpListener</code>가 작동하는 방법인데 여기에 <code>.await</code>만 추가되었습니다.
+<code>std</code> API를 그대로 복제하는 것이 <code>async_std</code>의 명확한 디자인 목표이기 때문입니다.</li>
+<li>이제 우리는 소켓으로 들어오는 값들을 반복하고 싶습니다. <code>std</code>에서는 아래와 같이 작동하는 것처럼요.</li>
+</ol>
+<pre><pre class="playground"><code class="language-rust edition2018 should_panic">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let listener: std::net::TcpListener = unimplemented!();
+for stream in listener.incoming() {
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>하지만 안타깝게도 이 기능은 <code>async</code>에서 아직 작동하지 않습니다. Rust에서 <code>async</code> for-반복문을 지원하지 않기 때문입니다.
+따라서 <code>while let Some(item) = iter.next().await</code> 패턴을 사용해서 아래와 같이 루프를 수동으로 구현해야 합니다.</p>
+<p>마지막으로 main을 추가하겠습니다.</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    net::{TcpListener, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">    task,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">
+</span><span class="boring">async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; { // 1
+</span><span class="boring">    let listener = TcpListener::bind(addr).await?; // 2
+</span><span class="boring">    let mut incoming = listener.incoming();
+</span><span class="boring">    while let Some(stream) = incoming.next().await { // 3
+</span><span class="boring">        // TODO
+</span><span class="boring">    }
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span>// main
+fn run() -&gt; Result&lt;()&gt; {
+    let fut = accept_loop(&quot;127.0.0.1:8080&quot;);
+    task::block_on(fut)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>여기서 깨달아야 할 중요한 점은 다른 언어들과는 다르게 Rust에서는 비동기 함수를 호출해도 실행이 되지 <strong>않는다는</strong> 점입니다.
+비동기 함수는 비활성 상태 머신인 Future를 만들 뿐입니다.
+비동기 함수에서 Future 상태 머신을 단계 별로 실행하려면 <code>.await</code>를 사용해야 합니다.
+비동기가 아닌 함수에서는 Future를 실행하려면 이를 실행자(executor)에게 전달해야 합니다.
+이 경우에는 <code>task::block_on</code>을 이용해서 Future를 현재의 쓰레드에서 실행하고 완료될 때까지 나머지 작업을 블로킹하게 됩니다.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../tutorial/specification.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../tutorial/receiving_messages.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../tutorial/specification.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../tutorial/receiving_messages.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

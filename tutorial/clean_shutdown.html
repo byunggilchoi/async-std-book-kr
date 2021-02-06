@@ -1,0 +1,489 @@
+<!DOCTYPE HTML>
+<html lang="kr" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Clean Shutdown - Async programming in Rust with async-std - kr</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../overview/async-std.html"><strong aria-hidden="true">1.1.</strong> Welcome to async-std!</a></li><li class="chapter-item expanded "><a href="../overview/std-and-library-futures.html"><strong aria-hidden="true">1.2.</strong> std::future and futures-rs</a></li><li class="chapter-item expanded "><a href="../overview/stability-guarantees.html"><strong aria-hidden="true">1.3.</strong> Stability guarantees</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts.html"><strong aria-hidden="true">2.</strong> Async concepts using async-std</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/futures.html"><strong aria-hidden="true">2.1.</strong> Futures</a></li><li class="chapter-item expanded "><a href="../concepts/tasks.html"><strong aria-hidden="true">2.2.</strong> Tasks</a></li><li class="chapter-item expanded "><a href="../concepts/async-read-write.html"><strong aria-hidden="true">2.3.</strong> Async read/write</a></li><li class="chapter-item expanded "><a href="../concepts/streams.html"><strong aria-hidden="true">2.4.</strong> Streams and Channels</a></li></ol></li><li class="chapter-item expanded "><a href="../tutorial/index.html"><strong aria-hidden="true">3.</strong> Tutorial: Implementing a chat</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tutorial/specification.html"><strong aria-hidden="true">3.1.</strong> Specification and Getting started</a></li><li class="chapter-item expanded "><a href="../tutorial/accept_loop.html"><strong aria-hidden="true">3.2.</strong> Writing an Accept Loop</a></li><li class="chapter-item expanded "><a href="../tutorial/receiving_messages.html"><strong aria-hidden="true">3.3.</strong> Receiving Messages</a></li><li class="chapter-item expanded "><a href="../tutorial/sending_messages.html"><strong aria-hidden="true">3.4.</strong> Sending Messages</a></li><li class="chapter-item expanded "><a href="../tutorial/connecting_readers_and_writers.html"><strong aria-hidden="true">3.5.</strong> Connecting Readers and Writers</a></li><li class="chapter-item expanded "><a href="../tutorial/all_together.html"><strong aria-hidden="true">3.6.</strong> All Together</a></li><li class="chapter-item expanded "><a href="../tutorial/clean_shutdown.html" class="active"><strong aria-hidden="true">3.7.</strong> Clean Shutdown</a></li><li class="chapter-item expanded "><a href="../tutorial/handling_disconnection.html"><strong aria-hidden="true">3.8.</strong> Handling Disconnection</a></li><li class="chapter-item expanded "><a href="../tutorial/implementing_a_client.html"><strong aria-hidden="true">3.9.</strong> Implementing a Client</a></li></ol></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">4.</strong> Async Patterns</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../patterns/small-patterns.html"><strong aria-hidden="true">4.1.</strong> TODO: Collected Small Patterns</a></li><li class="chapter-item expanded "><a href="../patterns/accept-loop.html"><strong aria-hidden="true">4.2.</strong> Production-Ready Accept Loop</a></li></ol></li><li class="chapter-item expanded "><a href="../security/index.html"><strong aria-hidden="true">5.</strong> Security practices</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../security/policy.html"><strong aria-hidden="true">5.1.</strong> Security Disclosures and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Async programming in Rust with async-std - kr</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#clean-shutdown" id="clean-shutdown">Clean Shutdown</a></h2>
+<p>One of the problems of the current implementation is that it doesn't handle graceful shutdown.
+If we break from the accept loop for some reason, all in-flight tasks are just dropped on the floor.
+A more correct shutdown sequence would be:</p>
+<ol>
+<li>Stop accepting new clients</li>
+<li>Deliver all pending messages</li>
+<li>Exit the process</li>
+</ol>
+<p>A clean shutdown in a channel based architecture is easy, although it can appear a magic trick at first.
+In Rust, receiver side of a channel is closed as soon as all senders are dropped.
+That is, as soon as producers exit and drop their senders, the rest of the system shuts down naturally.
+In <code>async_std</code> this translates to two rules:</p>
+<ol>
+<li>Make sure that channels form an acyclic graph.</li>
+<li>Take care to wait, in the correct order, until intermediate layers of the system process pending messages.</li>
+</ol>
+<p>In <code>a-chat</code>, we already have an unidirectional flow of messages: <code>reader -&gt; broker -&gt; writer</code>.
+However, we never wait for broker and writers, which might cause some messages to get dropped.
+Let's add waiting to the server:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">extern crate futures;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    io::{self, BufReader},
+</span><span class="boring">    net::{TcpListener, TcpStream, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">    task,
+</span><span class="boring">};
+</span><span class="boring">use futures::channel::mpsc;
+</span><span class="boring">use futures::sink::SinkExt;
+</span><span class="boring">use std::{
+</span><span class="boring">    collections::hash_map::{HashMap, Entry},
+</span><span class="boring">    sync::Arc,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">type Sender&lt;T&gt; = mpsc::UnboundedSender&lt;T&gt;;
+</span><span class="boring">type Receiver&lt;T&gt; = mpsc::UnboundedReceiver&lt;T&gt;;
+</span><span class="boring">
+</span><span class="boring">fn spawn_and_log_error&lt;F&gt;(fut: F) -&gt; task::JoinHandle&lt;()&gt;
+</span><span class="boring">where
+</span><span class="boring">    F: Future&lt;Output = Result&lt;()&gt;&gt; + Send + 'static,
+</span><span class="boring">{
+</span><span class="boring">    task::spawn(async move {
+</span><span class="boring">        if let Err(e) = fut.await {
+</span><span class="boring">            eprintln!(&quot;{}&quot;, e)
+</span><span class="boring">        }
+</span><span class="boring">    })
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">
+</span><span class="boring">async fn connection_loop(mut broker: Sender&lt;Event&gt;, stream: TcpStream) -&gt; Result&lt;()&gt; {
+</span><span class="boring">    let stream = Arc::new(stream); // 2
+</span><span class="boring">    let reader = BufReader::new(&amp;*stream);
+</span><span class="boring">    let mut lines = reader.lines();
+</span><span class="boring">
+</span><span class="boring">    let name = match lines.next().await {
+</span><span class="boring">        None =&gt; Err(&quot;peer disconnected immediately&quot;)?,
+</span><span class="boring">        Some(line) =&gt; line?,
+</span><span class="boring">    };
+</span><span class="boring">    broker.send(Event::NewPeer { name: name.clone(), stream: Arc::clone(&amp;stream) }).await // 3
+</span><span class="boring">        .unwrap();
+</span><span class="boring">
+</span><span class="boring">    while let Some(line) = lines.next().await {
+</span><span class="boring">        let line = line?;
+</span><span class="boring">        let (dest, msg) = match line.find(':') {
+</span><span class="boring">            None =&gt; continue,
+</span><span class="boring">            Some(idx) =&gt; (&amp;line[..idx], line[idx + 1 ..].trim()),
+</span><span class="boring">        };
+</span><span class="boring">        let dest: Vec&lt;String&gt; = dest.split(',').map(|name| name.trim().to_string()).collect();
+</span><span class="boring">        let msg: String = msg.trim().to_string();
+</span><span class="boring">
+</span><span class="boring">        broker.send(Event::Message { // 4
+</span><span class="boring">            from: name.clone(),
+</span><span class="boring">            to: dest,
+</span><span class="boring">            msg,
+</span><span class="boring">        }).await.unwrap();
+</span><span class="boring">    }
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">async fn connection_writer_loop(
+</span><span class="boring">    mut messages: Receiver&lt;String&gt;,
+</span><span class="boring">    stream: Arc&lt;TcpStream&gt;,
+</span><span class="boring">) -&gt; Result&lt;()&gt; {
+</span><span class="boring">    let mut stream = &amp;*stream;
+</span><span class="boring">    while let Some(msg) = messages.next().await {
+</span><span class="boring">        stream.write_all(msg.as_bytes()).await?;
+</span><span class="boring">    }
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum Event {
+</span><span class="boring">    NewPeer {
+</span><span class="boring">        name: String,
+</span><span class="boring">        stream: Arc&lt;TcpStream&gt;,
+</span><span class="boring">    },
+</span><span class="boring">    Message {
+</span><span class="boring">        from: String,
+</span><span class="boring">        to: Vec&lt;String&gt;,
+</span><span class="boring">        msg: String,
+</span><span class="boring">    },
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">async fn broker_loop(mut events: Receiver&lt;Event&gt;) -&gt; Result&lt;()&gt; {
+</span><span class="boring">    let mut peers: HashMap&lt;String, Sender&lt;String&gt;&gt; = HashMap::new();
+</span><span class="boring">
+</span><span class="boring">    while let Some(event) = events.next().await {
+</span><span class="boring">        match event {
+</span><span class="boring">            Event::Message { from, to, msg } =&gt; {
+</span><span class="boring">                for addr in to {
+</span><span class="boring">                    if let Some(peer) = peers.get_mut(&amp;addr) {
+</span><span class="boring">                        let msg = format!(&quot;from {}: {}\n&quot;, from, msg);
+</span><span class="boring">                        peer.send(msg).await?
+</span><span class="boring">                    }
+</span><span class="boring">                }
+</span><span class="boring">            }
+</span><span class="boring">            Event::NewPeer { name, stream} =&gt; {
+</span><span class="boring">                match peers.entry(name) {
+</span><span class="boring">                    Entry::Occupied(..) =&gt; (),
+</span><span class="boring">                    Entry::Vacant(entry) =&gt; {
+</span><span class="boring">                        let (client_sender, client_receiver) = mpsc::unbounded();
+</span><span class="boring">                        entry.insert(client_sender); // 4
+</span><span class="boring">                        spawn_and_log_error(connection_writer_loop(client_receiver, stream)); // 5
+</span><span class="boring">                    }
+</span><span class="boring">                }
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span>async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; {
+    let listener = TcpListener::bind(addr).await?;
+
+    let (broker_sender, broker_receiver) = mpsc::unbounded();
+    let broker_handle = task::spawn(broker_loop(broker_receiver));
+    let mut incoming = listener.incoming();
+    while let Some(stream) = incoming.next().await {
+        let stream = stream?;
+        println!(&quot;Accepting from: {}&quot;, stream.peer_addr()?);
+        spawn_and_log_error(connection_loop(broker_sender.clone(), stream));
+    }
+    drop(broker_sender); // 1
+    broker_handle.await?; // 5
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>And to the broker:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">extern crate async_std;
+</span><span class="boring">extern crate futures;
+</span><span class="boring">use async_std::{
+</span><span class="boring">    io::{self, BufReader},
+</span><span class="boring">    net::{TcpListener, TcpStream, ToSocketAddrs},
+</span><span class="boring">    prelude::*,
+</span><span class="boring">    task,
+</span><span class="boring">};
+</span><span class="boring">use futures::channel::mpsc;
+</span><span class="boring">use futures::sink::SinkExt;
+</span><span class="boring">use std::{
+</span><span class="boring">    collections::hash_map::{HashMap, Entry},
+</span><span class="boring">    sync::Arc,
+</span><span class="boring">};
+</span><span class="boring">
+</span><span class="boring">type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;;
+</span><span class="boring">type Sender&lt;T&gt; = mpsc::UnboundedSender&lt;T&gt;;
+</span><span class="boring">type Receiver&lt;T&gt; = mpsc::UnboundedReceiver&lt;T&gt;;
+</span><span class="boring">
+</span><span class="boring">async fn connection_writer_loop(
+</span><span class="boring">    mut messages: Receiver&lt;String&gt;,
+</span><span class="boring">    stream: Arc&lt;TcpStream&gt;,
+</span><span class="boring">) -&gt; Result&lt;()&gt; {
+</span><span class="boring">    let mut stream = &amp;*stream;
+</span><span class="boring">    while let Some(msg) = messages.next().await {
+</span><span class="boring">        stream.write_all(msg.as_bytes()).await?;
+</span><span class="boring">    }
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn spawn_and_log_error&lt;F&gt;(fut: F) -&gt; task::JoinHandle&lt;()&gt;
+</span><span class="boring">where
+</span><span class="boring">    F: Future&lt;Output = Result&lt;()&gt;&gt; + Send + 'static,
+</span><span class="boring">{
+</span><span class="boring">    task::spawn(async move {
+</span><span class="boring">        if let Err(e) = fut.await {
+</span><span class="boring">            eprintln!(&quot;{}&quot;, e)
+</span><span class="boring">        }
+</span><span class="boring">    })
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[derive(Debug)]
+</span><span class="boring">enum Event {
+</span><span class="boring">    NewPeer {
+</span><span class="boring">        name: String,
+</span><span class="boring">        stream: Arc&lt;TcpStream&gt;,
+</span><span class="boring">    },
+</span><span class="boring">    Message {
+</span><span class="boring">        from: String,
+</span><span class="boring">        to: Vec&lt;String&gt;,
+</span><span class="boring">        msg: String,
+</span><span class="boring">    },
+</span><span class="boring">}
+</span><span class="boring">
+</span>async fn broker_loop(mut events: Receiver&lt;Event&gt;) -&gt; Result&lt;()&gt; {
+    let mut writers = Vec::new();
+    let mut peers: HashMap&lt;String, Sender&lt;String&gt;&gt; = HashMap::new();
+    while let Some(event) = events.next().await { // 2
+        match event {
+            Event::Message { from, to, msg } =&gt; {
+                for addr in to {
+                    if let Some(peer) = peers.get_mut(&amp;addr) {
+                        let msg = format!(&quot;from {}: {}\n&quot;, from, msg);
+                        peer.send(msg).await?
+                    }
+                }
+            }
+            Event::NewPeer { name, stream} =&gt; {
+                match peers.entry(name) {
+                    Entry::Occupied(..) =&gt; (),
+                    Entry::Vacant(entry) =&gt; {
+                        let (client_sender, client_receiver) = mpsc::unbounded();
+                        entry.insert(client_sender);
+                        let handle = spawn_and_log_error(connection_writer_loop(client_receiver, stream));
+                        writers.push(handle); // 4
+                    }
+                }
+            }
+        }
+    }
+    drop(peers); // 3
+    for writer in writers { // 4
+        writer.await;
+    }
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Notice what happens with all of the channels once we exit the accept loop:</p>
+<ol>
+<li>First, we drop the main broker's sender.
+That way when the readers are done, there's no sender for the broker's channel, and the chanel closes.</li>
+<li>Next, the broker exits <code>while let Some(event) = events.next().await</code> loop.</li>
+<li>It's crucial that, at this stage, we drop the <code>peers</code> map.
+This drops writer's senders.</li>
+<li>Now we can join all of the writers.</li>
+<li>Finally, we join the broker, which also guarantees that all the writes have terminated.</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../tutorial/all_together.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../tutorial/handling_disconnection.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../tutorial/all_together.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../tutorial/handling_disconnection.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
